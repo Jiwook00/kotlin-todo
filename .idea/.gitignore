@@ -1,0 +1,23 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+# IDE files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/kotlin-todoapp.iml
+.idea/libraries/
+.idea/modules.xml
+
+# Build output
+out/
+build/
+*.class
+
+# Gradle
+.gradle/
