@@ -3,7 +3,6 @@ class TodoManager {
     private var todoId = 1
 
     fun showMenu() {
-        // 그럴듯한 와일 조건은 없을까?
         while(true) {
             println("\n==== Todo 관리 시스템 ====")
             println("1. 할 일 추가")
@@ -59,18 +58,7 @@ class TodoManager {
         print("완료/미완료 상태를 변경할 할 일의 ID를 입력하세요: ")
         val id = readlnOrNull()?.toIntOrNull()
 
-        if (id == null) {
-            println("유요한 ID를 입력하세요.")
-            return
-        }
-
-        val todo = todoList.find { it.id == id }
-        // 참고: 44 람다
-        // it 부분 참고.
-        if (todo == null) {
-            println("해당 ID의 할 일을 찾을 수 없습니다.")
-            return
-        }
+        val todo = findTodoById(id) ?: return
 
         val newStatus = !todo.isCompleted
         todo.isCompleted = newStatus
@@ -81,20 +69,26 @@ class TodoManager {
     private fun deleteTodo() {
         print("삭제할 할 일의 ID를 입력하세요: ")
         val id = readlnOrNull()?.toIntOrNull()
-        if (id == null) {
-            println("해당 ID의 할 일을 찾을 수 없습니다.")
-            return
-        }
 
-        val todo = todoList.find { it.id == id }
-        if (todo == null) {
-            println("해당 ID의 할 일을 찾을 수 없습니다.")
-            return
-        }
+        val todo = findTodoById(id) ?: return
 
         todoList.remove(todo)
         println("할 일이 삭제되었습니다.")
     }
 
+    private fun findTodoById(id: Int?): Todo? {
+        if (id == null) {
+            println("해당 ID의 할 일을 찾을 수 없습니다.")
+            return null
+        }
+
+        val todo = todoList.find { it.id == id }
+
+        if (todo == null) {
+            println("해당 ID의 할 일을 찾을 수 없습니다.")
+        }
+
+        return todo
+    }
 
 }
