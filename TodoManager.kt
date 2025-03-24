@@ -13,10 +13,10 @@ class TodoManager {
             print("원하는 작업을 선택하세요: ")
 
             when (readlnOrNull()) {
-                "1" -> println(addTodo())
-                "2" -> println(showtodoList())
-                "3" -> println(toggleTodo())
-                "4" -> println(deleteTodo())
+                "1" -> addTodo()
+                "2" -> showtodoList()
+                "3" -> toggleTodo()
+                "4" -> deleteTodo()
                 "0" -> return
                 else -> println("잘못된 입력입니다.")
             }
