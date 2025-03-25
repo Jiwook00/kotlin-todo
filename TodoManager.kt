@@ -12,6 +12,7 @@ class TodoManager {
             println("2-3. 제목순으로 정렬하여 보기")
             println("3. 할 일 완료/미완료 토글")
             println("4. 할 일 삭제")
+            println("5. 키워드 검색")
             println("0. 종료")
             print("원하는 작업을 선택하세요: ")
 
@@ -23,6 +24,7 @@ class TodoManager {
                 "2-3" -> showTodoListSortedByTitle()
                 "3" -> toggleTodo()
                 "4" -> deleteTodo()
+                "5" -> addSearchByKeyword()
                 "0" -> return
                 else -> println("잘못된 입력입니다.")
             }
@@ -89,14 +91,11 @@ class TodoManager {
 
     // 컬렉션에 대한 연산
     private fun showCompletedTodoList() {
-        val completedTodoList = todoList.filter { it.isCompleted }
-        displayTodoList(completedTodoList, "완료된 할 일")
-
+        filterTodoList({ it.isCompleted }, "완료된 할 일")
     }
 
     private fun showActivityTodoList() {
-        val activityTodoList = todoList.filter { !it.isCompleted }
-        displayTodoList(activityTodoList, "진행 중인 할 일")
+        filterTodoList({ !it.isCompleted }, "진행 중인 할 일")
     }
 
     private fun showTodoListSortedByTitle() {
@@ -117,4 +116,19 @@ class TodoManager {
         }
     }
 
+
+    private fun filterTodoList(predicate: (Todo) -> Boolean, message: String) {
+        val filteredTodoList = todoList.filter(predicate)
+        displayTodoList(filteredTodoList, message)
+    }
+
+    private fun addSearchByKeyword() {
+        print("검색할 키워드 입력: ")
+        val keyword = readlnOrNull()?.lowercase() ?: ""
+
+        filterTodoList(
+            { it.title.lowercase().contains(keyword) || it.description.lowercase().contains(keyword) },
+            "키워드 '$keyword' 검색 결과"
+        )
+    }
 }
