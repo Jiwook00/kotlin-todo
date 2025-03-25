@@ -7,6 +7,9 @@ class TodoManager {
             println("\n==== Todo 관리 시스템 ====")
             println("1. 할 일 추가")
             println("2. 할 일 목록 보기")
+            println("2-1. 완료된 할 일만 보기")
+            println("2-2. 진행 중인 할 일만 보기")
+            println("2-3. 제목순으로 정렬하여 보기")
             println("3. 할 일 완료/미완료 토글")
             println("4. 할 일 삭제")
             println("0. 종료")
@@ -14,7 +17,10 @@ class TodoManager {
 
             when (readlnOrNull()) {
                 "1" -> addTodo()
-                "2" -> showtodoList()
+                "2" -> showTodoList()
+                "2-1" -> showCompletedTodoList()
+                "2-2" -> showActivityTodoList()
+                "2-3" -> showTodoListSortedByTitle()
                 "3" -> toggleTodo()
                 "4" -> deleteTodo()
                 "0" -> return
@@ -39,18 +45,8 @@ class TodoManager {
     }
 
     // 할 일 목록 보기
-    private fun showtodoList() {
-        if (todoList.isEmpty()) {
-            println("등록된 할 일이 없습니다.")
-            return
-        }
-
-        println("\n==== 할 일 목록 ====")
-        for ((id, title, description, isCompleted) in todoList) {
-            val status = if (isCompleted) "[완료]" else "[진행중]"
-            println("$id: $status $title - $description")
-        }
-
+    private fun showTodoList() {
+        displayTodoList(todoList, "할 일 목록")
     }
 
     // 할 일 완료, 미완료 토글
@@ -89,6 +85,36 @@ class TodoManager {
         }
 
         return todo
+    }
+
+    // 컬렉션에 대한 연산
+    private fun showCompletedTodoList() {
+        val completedTodoList = todoList.filter { it.isCompleted }
+        displayTodoList(completedTodoList, "완료된 할 일")
+
+    }
+
+    private fun showActivityTodoList() {
+        val activityTodoList = todoList.filter { !it.isCompleted }
+        displayTodoList(activityTodoList, "진행 중인 할 일")
+    }
+
+    private fun showTodoListSortedByTitle() {
+        val sortedTodoList = todoList.sortedBy { it.title }
+        displayTodoList(sortedTodoList, "제목순 정렬된 한 일")
+    }
+
+    private fun displayTodoList(todoList: List<Todo>, message: String) {
+        if (todoList.isEmpty()) {
+            println("표시할 할 일이 없습니다.")
+            return
+        }
+
+        println("\n==== $message ====")
+        todoList.forEach { (id, title, description, isCompleted) ->
+            val status = if (isCompleted) "[완료]" else "[진행중]"
+            println("$id: $status $title - $description")
+        }
     }
 
 }
