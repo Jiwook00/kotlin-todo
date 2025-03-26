@@ -12,6 +12,8 @@
 - 기본적인 CRUD(Create, Read, Update, Delete) 기능을 구현
 - 책에서 특히 중요한 아톰들(변수, 함수, 클래스, 컬렉션 등)을 실습
 
+![todo-kotlin](assets/images/todo-kotlin.png)
+
 ## Todo 앱 개발에 필요한 '아토믹 코틀린' 필수 목차
 > [링크]()가 있는 목차는 책을 읽다가 이해가 안됐거나 보충 설명이 필요한 것들을 정리한 문서로 연결됩니다. 
 
