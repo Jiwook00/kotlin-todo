@@ -4,7 +4,7 @@ class TodoManager {
 
     fun showMenu() {
         while(true) {
-            println("\n==== Todo 관리 시스템 ====")
+            "Todo 관리 시스템".printAsHeader()
             println("1. 할 일 추가")
             println("2. 할 일 목록 보기")
             println("2-1. 완료된 할 일만 보기")
@@ -109,10 +109,9 @@ class TodoManager {
             return
         }
 
-        println("\n==== $message ====")
+        message.printAsHeader()
         todoList.forEach { (id, title, description, isCompleted) ->
-            val status = if (isCompleted) "[완료]" else "[진행중]"
-            println("$id: $status $title - $description")
+            println("$id: ${isCompleted.toStatusString()} $title - $description")
         }
     }
 
@@ -130,5 +129,13 @@ class TodoManager {
             { it.title.lowercase().contains(keyword) || it.description.lowercase().contains(keyword) },
             "키워드 '$keyword' 검색 결과"
         )
+    }
+
+    private fun Boolean.toStatusString(): String {
+        return if (this) "[완료]" else "[진행중]"
+    }
+
+    private fun String.printAsHeader() {
+        println("\n==== $this =====")
     }
 }
